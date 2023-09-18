@@ -26,14 +26,20 @@ const StyledTable = styled.table`
     margin-top: 30px;
   }
 
+  .data-header {
+    text-align: right;
+  }
+
   .data-column {
-    color: ${({ theme}) => theme.darkYellow};
+    color: ${({ theme }) => theme.darkYellow};
+    text-align: right;
   }
 `
 
 const TableData = styled.td`
   padding: 1rem;
   overflow: hidden;
+  border-bottom: 1px solid ${({ theme }) => theme.midGreen};
 
   @media only screen and (${devices.mobile}) {
     padding: 0.75rem;
@@ -50,7 +56,6 @@ const TableHeader = styled.th`
 `
 
 const TableRow = styled.tr`
-  border-bottom: 1px solid ${({ theme }) => theme.midGreen};
   }
   :hover {
     cursor: pointer;
@@ -83,7 +88,11 @@ function ComparisonTable<T extends object>({ data, columns }: TableProps<T>) {
   }
 
   const renderHeader = (header: Header<T, unknown>) => (
-    <TableHeader key={header.id} colSpan={header.colSpan}>
+    <TableHeader
+      key={header.id}
+      colSpan={header.colSpan}
+      className={header.index > 1 ? 'data-header' : ''}
+    >
       {header.isPlaceholder ? null : (
         // eslint-disable-next-line jsx-a11y/click-events-have-key-events
         <div
@@ -91,7 +100,8 @@ function ComparisonTable<T extends object>({ data, columns }: TableProps<T>) {
             className: header.column.getCanSort() ? 'cursor-pointer select-none' : '',
             onClick: header.column.getToggleSortingHandler(),
             onKeyDown: header.column.getToggleSortingHandler(),
-          }}>
+          }}
+        >
           {flexRender(header.column.columnDef.header, header.getContext())}
         </div>
       )}
@@ -109,9 +119,7 @@ function ComparisonTable<T extends object>({ data, columns }: TableProps<T>) {
         {table.getRowModel().rows.map((row) => (
           <TableRow key={row.id} onClick={() => handleRowClick(row)}>
             {row.getVisibleCells().map((cell, columnIndex) => (
-              <TableData
-                key={cell.id}
-                className={columnIndex > 1 ? 'data-column' : ''}>
+              <TableData key={cell.id} className={columnIndex > 1 ? 'data-column' : ''}>
                 {flexRender(cell.column.columnDef.cell, cell.getContext())}
               </TableData>
             ))}
