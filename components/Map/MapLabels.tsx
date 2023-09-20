@@ -6,9 +6,7 @@ import { Paragraph } from '../Typography'
 import { mapColors } from '../shared'
 
 const Container = styled.div`
-  padding-left: 0.87rem;
-  padding-top: 1.2rem;
-  padding-bottom: 0.5rem;
+  padding: 16px;
   @media only screen and (${devices.tablet}) {
     position: absolute;
     left: 0;

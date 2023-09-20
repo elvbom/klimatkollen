@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import styled from 'styled-components'
 import DeckGL, { PolygonLayer, RGBAColor } from 'deck.gl'
 import { ReactNode, useEffect, useState } from 'react'
 import axios from 'axios'
@@ -17,10 +16,6 @@ const INITIAL_VIEW_STATE = {
   pitch: 0,
   bearing: 0,
 }
-
-const DeckGLWrapper = styled.div`
-  width: 100%;
-`
 
 const hexToRGBA = (hex: string): RGBAColor => {
   const hexValue = hex.replace('#', '')
@@ -116,9 +111,7 @@ type Props = {
   children?: ReactNode
 }
 
-function Map({
-  data, dataType, boundaries, children,
-}: Props) {
+function Map({ data, dataType, boundaries, children }: Props) {
   const [municipalityData, setMunicipalityData] = useState<any>({})
   const router = useRouter()
 
@@ -199,7 +192,7 @@ function Map({
   }
 
   return (
-    <DeckGLWrapper>
+    <>
       <NextNProgress
         color={colorTheme.darkGreenOne}
         startPosition={0.3}
@@ -223,6 +216,7 @@ function Map({
             color: colorTheme.offWhite,
           },
         }}
+        style={{ position: 'absolute', width: '100%', height: '100%' }}
         onClick={({ object }) => {
           // IDK what the correct type is
           const name = (object as unknown as MunicipalityData)?.name
@@ -237,7 +231,7 @@ function Map({
       }} */
       />
       {children}
-    </DeckGLWrapper>
+    </>
   )
 }
 

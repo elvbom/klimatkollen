@@ -11,6 +11,7 @@ const RadioContainer = styled.div`
   display: flex;
   font-weight: bolder;
   flex-wrap: wrap;
+  justify-content: center;
 `
 
 const RadioLabel = styled.label`

@@ -28,6 +28,10 @@ const Container = styled.div`
   width: 100%;
 `
 
+const CenteredH2 = styled(H2)`
+  text-align: center;
+`
+
 const InfoText = styled.div`
   padding: 1rem 1rem 0 1rem;
 `
@@ -45,6 +49,14 @@ const InfoContainer = styled.div`
   z-index: 15;
 `
 
+const ToggleContainer = styled.div`
+  display: block;
+
+  @media only screen and (${devices.laptop}) {
+    display: none;
+  }
+`
+
 const defaultViewMode = 'karta'
 const secondaryViewMode = 'lista'
 
@@ -53,20 +65,33 @@ const ComparisonContainer = styled.div<{ viewMode: string }>`
   overflow-y: scroll;
   z-index: 100;
   // TODO: Hardcoding this is not good.
-  height: 380px;
+  height: 500px;
   border-radius: 8px;
   display: flex;
+
   @media only screen and (${devices.mobile}) {
     margin-top: ${({ viewMode }) => (viewMode === secondaryViewMode ? '32px' : '0')};
   }
+
   @media only screen and (${devices.tablet}) {
     height: 500px;
   }
+  
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
   ::-webkit-scrollbar {
     /* Chrome, Safari and Opera */
     display: none;
+  }
+`
+
+const AlternatingContainer = styled.div<{ viewMode: string, compareViewMode: string }>`
+  width: 100%;
+  display: ${({ viewMode, compareViewMode }) => (viewMode === compareViewMode ? 'block' : 'none')};
+
+  @media only screen and (${devices.laptop}) {
+    position: relative;
+    display: block;
   }
 `
 
@@ -105,22 +130,23 @@ function StartPage({
       />
       <PageWrapper backgroundColor="black">
         <Container>
-          <H2>Hur går det med?</H2>
+          <CenteredH2>Hur går det med?</CenteredH2>
           <RadioButtonMenu
             selectedData={selectedData}
             setSelectedData={setSelectedData}
           />
           <InfoContainer>
-            <ToggleButton
-              handleClick={handleToggle}
-              text={toggleViewMode === defaultViewMode ? 'Listvy' : 'Kartvy'}
-              icon={toggleViewMode === defaultViewMode ? <ListIcon /> : <MapIcon />}
-            />
+            <ToggleContainer>
+              <ToggleButton
+                handleClick={handleToggle}
+                text={toggleViewMode === defaultViewMode ? 'Listvy' : 'Kartvy'}
+                icon={toggleViewMode === defaultViewMode ? <ListIcon /> : <MapIcon />}
+              />
+            </ToggleContainer>
             <ComparisonContainer viewMode={toggleViewMode}>
-              <div
-                style={{
-                  display: toggleViewMode === defaultViewMode ? 'block' : 'none',
-                }}
+              <AlternatingContainer
+                viewMode={toggleViewMode}
+                compareViewMode={defaultViewMode}
               >
                 <MapLabels
                   labels={datasetDescription.labels}
@@ -131,15 +157,13 @@ function StartPage({
                   dataType={datasetDescription.dataType}
                   boundaries={datasetDescription.boundaries}
                 />
-              </div>
-              <div
-                style={{
-                  display: toggleViewMode === secondaryViewMode ? 'block' : 'none',
-                  width: '100%',
-                }}
+              </AlternatingContainer>
+              <AlternatingContainer
+                viewMode={toggleViewMode}
+                compareViewMode={secondaryViewMode}
               >
                 <ComparisonTable data={rankedData[selectedData]} columns={cols} />
-              </div>
+              </AlternatingContainer>
             </ComparisonContainer>
             <InfoText>
               <ParagraphBold>{datasetDescription.heading}</ParagraphBold>

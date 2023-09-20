@@ -17,7 +17,7 @@ import { devices } from '../utils/devices'
 const StyledTable = styled.table`
   width: 98%;
   margin-left: 1%;
-  margin-top: 65px;
+  margin-top: 8px;
   overflow-y: auto;
   border-collapse: collapse;
 
@@ -28,6 +28,16 @@ const StyledTable = styled.table`
 
   .data-header {
     text-align: right;
+  }
+
+  #first-header {
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+  }
+
+  #last-header {
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
   }
 
   .data-column {
@@ -56,7 +66,7 @@ const TableHeader = styled.th`
 `
 
 const TableRow = styled.tr`
-  }
+  border-bottom: 1px solid ${({ theme }) => theme.midGreen};
   :hover {
     cursor: pointer;
   }
@@ -87,11 +97,13 @@ function ComparisonTable<T extends object>({ data, columns }: TableProps<T>) {
     router.push(route)
   }
 
-  const renderHeader = (header: Header<T, unknown>) => (
+  const renderHeader = (header: Header<T, unknown>, index: number) => (
     <TableHeader
       key={header.id}
       colSpan={header.colSpan}
       className={header.index > 1 ? 'data-header' : ''}
+      // eslint-disable-next-line no-nested-ternary
+      id={index === 0 ? 'first-header' : index === header.headerGroup.headers.length - 1 ? 'last-header' : ''}
     >
       {header.isPlaceholder ? null : (
         // eslint-disable-next-line jsx-a11y/click-events-have-key-events
@@ -112,7 +124,7 @@ function ComparisonTable<T extends object>({ data, columns }: TableProps<T>) {
     <StyledTable>
       {table.getHeaderGroups().map((headerGroup) => (
         <tr key={headerGroup.id}>
-          {headerGroup.headers.map((header) => renderHeader(header))}
+          {headerGroup.headers.map((header, index) => renderHeader(header, index))}
         </tr>
       ))}
       <tbody>
