@@ -3,7 +3,7 @@ import { devices } from '../../utils/devices'
 
 import Icon from '../../public/icons/arrow.svg'
 import { Paragraph } from '../Typography'
-import { mapColors } from '../shared'
+import { Square, mapColors } from '../shared'
 
 const Container = styled.div`
   padding: 16px;
@@ -29,20 +29,13 @@ const LabelBox = styled.div`
   }
 `
 
-const Square = styled.div<{ color: string }>`
-  background-color: ${(props) => props.color};
-  width: 20px;
-  height: 20px;
-  position: relative;
-`
-
-const ArrowIcon = styled(Icon)<{ rotateup?: boolean }>`
+const ArrowIcon = styled(Icon)<{ $rotateUp?: boolean }>`
   color: black;
   position: absolute;
   z-index: 1;
   margin: auto;
   left: 0;
-  ${(props) => props.rotateup && 'transform: rotate(-90deg)'};
+  ${($props) => $props.rotateUp && 'transform: rotate(-90deg)'};
   right: 0;
   top: 0;
   bottom: 0;
@@ -63,14 +56,14 @@ const StyledParagraph = styled(Paragraph)`
 type LabelProps = {
   color: string
   text: string
-  rotateup?: boolean
+  $rotateUp?: boolean
 }
 
-function Label({ color, text, rotateup }: LabelProps) {
+function Label({ color, text, $rotateUp }: LabelProps) {
   return (
     <LabelBox>
       <Square color={color}>
-        {rotateup !== undefined && <ArrowIcon rotateup={rotateup} />}
+        {$rotateUp !== undefined && <ArrowIcon rotateUp={$rotateUp} />}
       </Square>
       <StyledParagraph>{text}</StyledParagraph>
     </LabelBox>
@@ -88,7 +81,7 @@ function MapLabels({ labels, rotations }: MapLabelsProps) {
   return (
     <Container>
       {labels.map((label, i) => (
-        <Label color={labelColors[i]} text={label} rotateup={rotations[i]} />
+        <Label color={labelColors[i]} text={label} $rotateUp={rotations[i]} />
       ))}
     </Container>
   )

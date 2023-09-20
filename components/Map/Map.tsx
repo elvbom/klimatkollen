@@ -25,7 +25,10 @@ const hexToRGBA = (hex: string): RGBAColor => {
   return [red, green, blue]
 }
 
-const getColor = (dataPoint: number | string, boundaries: number[] | string[]): RGBAColor => {
+const getColor = (
+  dataPoint: number | string,
+  boundaries: number[] | string[],
+): RGBAColor => {
   const lightBlue: RGBAColor = hexToRGBA(mapColors[5])
   const beige: RGBAColor = hexToRGBA(mapColors[4])
   const lightYellow: RGBAColor = hexToRGBA(mapColors[3])
@@ -34,7 +37,7 @@ const getColor = (dataPoint: number | string, boundaries: number[] | string[]): 
   const red: RGBAColor = hexToRGBA(mapColors[0])
 
   if (boundaries.length === 2) {
-    return (dataPoint === boundaries[0]) ? red : lightBlue
+    return dataPoint === boundaries[0] ? red : lightBlue
   }
 
   // FIXME refactor plz
@@ -111,7 +114,9 @@ type Props = {
   children?: ReactNode
 }
 
-function Map({ data, dataType, boundaries, children }: Props) {
+function Map({
+  data, dataType, boundaries, children,
+}: Props) {
   const [municipalityData, setMunicipalityData] = useState<any>({})
   const router = useRouter()
 

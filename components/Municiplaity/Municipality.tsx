@@ -10,7 +10,8 @@ import ScoreCard from './ScoreCard'
 import { devices } from '../../utils/devices'
 import { Municipality as TMunicipality } from '../../utils/types'
 import MunicipalitySolutions from './MunicipalitySolutions'
-import MunicipalityIssues from './MunicipalityIssues'
+import MunicipalityEmissionGraph from './MunicipalityEmissionGraph'
+import MunicipalityEmissionNumbers from './MunicipalityEmissionNumbers'
 
 const StyledContainer = styled.div`
   display: flex;
@@ -83,7 +84,7 @@ function Municipality(props: Props) {
 
   return (
     <>
-      <PageWrapper backgroundColor="black">
+      <PageWrapper backgroundColor="lightBlack">
         <BackArrow route="/" />
         <StyledContainer>
           <HeaderSection>
@@ -95,12 +96,13 @@ function Municipality(props: Props) {
               />
             )}
           </HeaderSection>
-          <MunicipalityIssues
+          <MunicipalityEmissionGraph
             municipality={municipality}
             step={step}
             onNextStep={onNextStep}
             onPreviousStep={onPreviousStep}
           />
+          <MunicipalityEmissionNumbers municipality={municipality} step={step} />
         </StyledContainer>
         <MunicipalitySolutions municipality={municipality} />
       </PageWrapper>

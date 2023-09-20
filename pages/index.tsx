@@ -85,9 +85,9 @@ const ComparisonContainer = styled.div<{ viewMode: string }>`
   }
 `
 
-const AlternatingContainer = styled.div<{ viewMode: string, compareViewMode: string }>`
+const AlternatingContainer = styled.div<{ $viewMode: string, $compareViewMode: string }>`
   width: 100%;
-  display: ${({ viewMode, compareViewMode }) => (viewMode === compareViewMode ? 'block' : 'none')};
+  display: ${({ $viewMode, $compareViewMode }) => ($viewMode === $compareViewMode ? 'block' : 'none')};
 
   @media only screen and (${devices.laptop}) {
     position: relative;
@@ -145,8 +145,8 @@ function StartPage({
             </ToggleContainer>
             <ComparisonContainer viewMode={toggleViewMode}>
               <AlternatingContainer
-                viewMode={toggleViewMode}
-                compareViewMode={defaultViewMode}
+                $viewMode={toggleViewMode}
+                $compareViewMode={defaultViewMode}
               >
                 <MapLabels
                   labels={datasetDescription.labels}
@@ -159,8 +159,8 @@ function StartPage({
                 />
               </AlternatingContainer>
               <AlternatingContainer
-                viewMode={toggleViewMode}
-                compareViewMode={secondaryViewMode}
+                $viewMode={toggleViewMode}
+                $compareViewMode={secondaryViewMode}
               >
                 <ComparisonTable data={rankedData[selectedData]} columns={cols} />
               </AlternatingContainer>
