@@ -53,7 +53,7 @@ type MenuProps = {
   setSelectedData: React.Dispatch<React.SetStateAction<SelectedData>>
 }
 
-function RadioButtonMenu({ selectedData, setSelectedData }: MenuProps) {
+function RadioMenu({ selectedData, setSelectedData }: MenuProps) {
   const handleSelectData = (datasetName: string) => {
     const path = datasetName !== defaultDataset
       ? `/${replaceLetters(datasetName).toLowerCase()}`
@@ -80,4 +80,4 @@ function RadioButtonMenu({ selectedData, setSelectedData }: MenuProps) {
   )
 }
 
-export default RadioButtonMenu
+export default RadioMenu

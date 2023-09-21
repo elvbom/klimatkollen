@@ -13,6 +13,12 @@ import MunicipalitySolutions from './MunicipalitySolutions'
 import MunicipalityEmissionGraph from './MunicipalityEmissionGraph'
 import MunicipalityEmissionNumbers from './MunicipalityEmissionNumbers'
 
+const Container = styled.div`
+  padding-left: 32px;
+  padding-right: 32px;
+  background: ${({ theme }) => theme.lightBlack}
+`
+
 const StyledContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -83,7 +89,7 @@ function Municipality(props: Props) {
   } = props
 
   return (
-    <>
+    <Container>
       <PageWrapper backgroundColor="lightBlack">
         <BackArrow route="/" />
         <StyledContainer>
@@ -134,7 +140,7 @@ function Municipality(props: Props) {
           />
         </DropDownSection>
       </PageWrapper>
-    </>
+    </Container>
   )
 }
 
